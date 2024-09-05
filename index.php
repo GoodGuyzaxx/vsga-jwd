@@ -31,7 +31,7 @@
                         <a class="nav-link" href="galeri.html">Galeri</a>
                     </li>
                 </ul>
-                <button class="btn btn-outline-light" type="button">Login</button>
+                <a class="btn btn-outline-light" type="button" href="login.php">Login</a>
             </div>
         </div>
     </nav>

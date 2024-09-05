@@ -9,7 +9,6 @@
     <link href="stylesheet.css" rel="stylesheet">
 </head>
 
-
 <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <!-- Navbar content -->
@@ -37,7 +36,47 @@
     </nav>
 
     <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">No</th>
+                            <th scope="col">Nama Pemesan</th>
+                            <th scope="col">No Telp</th>
+                            <th scope="col">Durasi</th>
+                            <th scope="col">Peserta</th>
+                            <th scope="col">Total Biaya</th>
+                            <th scope="col">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        include 'koneksi.php';
+                        $data_pesanan = mysqli_query($db, "SELECT * from tb_pesanan");
+                        $no = 1;
+                        foreach ($data_pesanan as $pesanan) { ?>
+                            <tr>
+                                <td><?php echo $no; ?></td>
+                                <td><?php echo $pesanan['nama_pemesan']; ?></td>
+                                <td><?php echo $pesanan['no_telp']; ?></td>
+                                <td><?php echo $pesanan['durasi']; ?></td>
+                                <td><?php echo $pesanan['jlh_peserta']; ?></td>
+                                <td><?php echo $pesanan['jumlah']; ?></td>
+                                <td>
+                                    <a href="edit.php?id=<?php echo $pesanan['id']; ?>" class="btn btn-warning">EDIT</a>
+                                    <a href="delete.php?id=<?php echo $pesanan['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?')">HAPUS</a>
+                                </td>
+                            </tr>
 
+                        <?php $no++;
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 
