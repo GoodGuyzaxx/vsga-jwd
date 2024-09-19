@@ -7,6 +7,57 @@
     <title>Wisata Indonesia</title>
     <link href="bootstrap/dist/css/bootstrap.css" rel="stylesheet">
     <link href="stylesheet.css" rel="stylesheet">
+
+    <script>
+        //Fungsi Untuk Memilih Paket Melalui Combo Box
+        function pilihPaket(pkt) {
+            var selectedpaket = "";
+            var jumlahPaket = 0;
+            var potongan = 0;
+            var hargaPaket = 0;
+            var durasi = document.getElementById("durasi").value; //nilai dari input text durasi
+            var peserta = document.getElementById("peserta").value; //nilai dari input text peserta
+
+            //hitung panjang array
+            for (i = 0; i < pkt.paket.length; i++) {
+                if (pkt.paket[i].checked) {
+                    selectedpaket += pkt.paket[i].value + "";
+
+                    //jumlah paket untuk menetapkan potongan, dibagi 3 karena berada dalam perulangan
+                    jumlahPaket += pkt.paket.length / 3;
+
+                    //logika penentuan diskon, jika memilih 2 paket diberikan diskon 5% dan jika 3 paket 10%
+                    potongan = (jumlahPaket - 1) * 5;
+                }
+            }
+
+            //menetapkan harga paket menggunakan seleksi kondisi
+            if (pkt.paket[0].checked && pkt.paket[1].checked && pkt.paket[2].checked) {
+                hargaPaket = 2000000;
+            } else if (pkt.paket[0].checked && pkt.paket[1].checked) {
+                hargaPaket = 1500000;
+            } else if (pkt.paket[0].checked && pkt.paket[2].checked) {
+                hargaPaket = 1500000;
+            } else if (pkt.paket[1].checked && pkt.paket[2].checked) {
+                hargaPaket = 1000000;
+            } else if (pkt.paket[1].checked) {
+                hargaPaket = 500000;
+            } else if (pkt.paket[2].checked) {
+                hargaPaket = 500000;
+            } else if (pkt.paket[0].checked) {
+                hargaPaket = 1000000;
+            }
+
+            //menghitung total biaya - diskon
+            var total = (durasi * peserta * hargaPaket) - ((durasi * peserta * hargaPaket) * (potongan / 100));
+
+            //tampilkan hasil pada form
+            document.getElementById("pilihan").value = selectedpaket;
+            document.getElementById("diskon").value = potongan;
+            document.getElementById("hargaPaket").value = hargaPaket;
+            document.getElementById("totalBiaya").value = total;
+        }
+    </script>
 </head>
 
 
@@ -39,89 +90,67 @@
     <form action="kirimdata.php" method="POST">
         <div class="container">
             <div class="row justify-content-center">
+                <h4 class=" text-center">Form Pemesanan</h4>
                 <div class="col-6">
-                    <h1 class="d-flex justify-content-center">Form Pemesan</h1>
                     <div class="mb-3">
-                        <label class="form-label">Nama Pemesan</label>
-                        <input type="text" class="form-control" id="namaPemesan" placeholder="Masukan Nama" name="namaPemesan">
+                        <label for="nama" class="form-label">Nama Pemesan</label>
+                        <input type="text" class="form-control" id="namaPemesan" placeholder="Nama Pemesan" name="namaPemesan" required>
                     </div>
                     <div class="mb-3">
-                        <label for="exampleFormControlInput1" class="form-label">Nomor Telepon/HP</label>
-                        <input type="text" class="form-control" id="nomorTelp" placeholder="Masukan Nama" name="nomorTelp">
+                        <label for="nohp" class="form-label">Nomor HP</label>
+                        <input type="text" class="form-control" id="nomorTelp" placeholder="Nomor HP" name="nomorTelp" required>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Durasi Pelaksanaan Hari</label>
-                        <div class="col-sm-3 input-group">
-                            <input class="form-control col-sm-4" id="durasiPelaksanaan" placeholder="Hari" name="durasiPelaksanaan">
-                            <span class="input-group-text">hari</span>
-                        </div>
+                    <label for="durasi" class="form-label">Durasi Perjalanan</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="durasi" placeholder="0" name="durasi" oninput="pilihPaket(this.form)" required>
+                        <span class="input-group-text" id="basic-addon2">Hari</span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Jumlah Peserta</label>
-                        <div class="col-sm-3 input-group">
-                            <input type="text" class="form-control" id="jmlPeserta" placeholder="1" name="jmlPeserta">
-                            <span class="input-group-text">Orang</span>
-                        </div>
+                    <label for="peserta" class="form-label">Jumlah Peserta</label> &nbsp;
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="peserta" name="peserta" oninput="pilihPaket(this.form)" required>
+                        <span class="input-group-text" id="basic-addon2">Orang</span>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Diskon</label>
-                        <div class="col-sm-4 input-group">
-                            <input type="text" class="form-control" id="diskon" placeholder="%" name="diskon">
-                            <span class="input-group-text">%</span>
-                        </div>
+
+                    <label for="peserta" class="form-label">Paket Perjalanan</label><br>
+                    <div class="form-check form-check-inline">
+                        <input name="paket" class="form-check-input" type="checkbox" id="penginapan" onclick="pilihPaket(this.form)" value="P">
+                        <label class="form-check-label" for="inlineCheckbox1">Penginapan</label>
                     </div>
-                    <div class="mb-3">
-                        <label class="form-label">Pelayanaan Paket Perjalanan</label>
-                        <div class="mb-3">
-                            <div class="col-md-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="paket[]" type="checkbox" value="" id="cbPenginapan">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Penginapan
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="paket[]" type="checkbox" value="" id="cbTransport">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Transport
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-1">
-                                <div class="form-check">
-                                    <input class="form-check-input" name="paket[]" type="checkbox" value="" id="cbMakanan">
-                                    <label class="form-check-label" for="flexCheckDefault">
-                                        Makanan
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mb-3 col-auto">
-                            <label class="form-label">Harga Paket Perjalanan</label>
-                            <div class=col-sm-3>
-                                <input type="text" class="form-control" id="hargaPaket" name="hargaPaket">
-                            </div>
-                        </div>
-                        <div class="mb-3 col-auto">
-                            <label class="form-label">Paket Tagihan</label>
-                            <div class=col-sm-3>
-                                <input type="text" class="form-control" id="paketTagihan" name="paketTagihan">
-                            </div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-sm-7">
-                                <button type="submit" name="simpan" id="simpan" class="btn btn-success">Simpan</button>
-                                <button type="submit" class="btn btn-danger">Batal</button>
-                                <a class="btn btn-info" href="ListPemesanan.php" role="button">Lihat Pemesanan</a>
-                            </div>
-                        </div>
+                    <div class="form-check form-check-inline">
+                        <input name="paket" class="form-check-input" type="checkbox" id="transportasi" onclick="pilihPaket(this.form)" value="T">
+                        <label class="form-check-label" for="inlineCheckbox2">Transportasi</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                        <input name="paket" class="form-check-input" type="checkbox" id="makan" onclick="pilihPaket(this.form)" value="M">
+                        <label class="form-check-label" for="inlineCheckbox2">Makan</label>
+                    </div>
+                    <input type="text" class="form-control visually-hidden" id="pilihan" placeholder="" name="pilihan">
+                    <br><br>
+                    <label for="peserta" class="form-label">Diskon</label> &nbsp;
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="diskon" placeholder="0" name="diskon" readonly>
+                        <span class="input-group-text" id="basic-addon2">%</span>
+                    </div>
+                    <label for="peserta" class="form-label">Harga Paket</label><br>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Rp</span>
+                        <input type="text" class="form-control" name="hargaPaket" id="hargaPaket" readonly>
+                        <span class="input-group-text">.00</span>
+                    </div>
+                    <label for="peserta" class="form-label">Jumlah Tagihan</label><br>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Rp</span>
+                        <input type="text" class="form-control" name="totalBiaya" id="totalBiaya" readonly>
+                        <span class="input-group-text">.00</span>
+                    </div>
+                    <button type="submit" class="btn btn-success" name="simpan">Simpan</button>
+                    <a href="index.php" type="button" class="btn btn-danger">Batal</a>
+                    <div class="col-7 mt-3">
+                        <a href="ListPemesanan.php" type="button" class="btn btn-info">Lihat Pesanan</a>
                     </div>
                 </div>
             </div>
         </div>
-    </form>
 </body>
 
 </html>

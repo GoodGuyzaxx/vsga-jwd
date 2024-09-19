@@ -56,14 +56,6 @@
         </div>
     </div>
     </div>
-
-    <br>
-    <div class="bg-dark">
-        <br>
-        <p class="text-light text-center">Pelatihan Junior Web Developer <br> Jayapura, September 2024</p>
-        <br>
-    </div>
-
 </body>
 
 </html>

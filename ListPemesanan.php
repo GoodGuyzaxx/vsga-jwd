@@ -24,7 +24,7 @@
                         <a class="nav-link" aria-current="page" href="index.php">Beranda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#">Form Pemesanan</a>
+                        <a class="nav-link active" href="pemesanan.php">Form Pemesanan</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="galeri.html">Galeri</a>
@@ -65,7 +65,7 @@
                                 <td><?php echo $pesanan['jumlah']; ?></td>
                                 <td>
                                     <a href="edit.php?id=<?php echo $pesanan['id']; ?>" class="btn btn-warning">EDIT</a>
-                                    <a href="delete.php?id=<?php echo $pesanan['id']; ?>" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this record?')">HAPUS</a>
+                                    <a href="delete.php?id=<?php echo $pesanan['id']; ?>" class="btn btn-danger" onclick="return confirm('Yakin Menghapus Data?')">HAPUS</a>
                                 </td>
                             </tr>
 

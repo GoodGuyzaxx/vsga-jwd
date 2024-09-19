@@ -53,8 +53,8 @@
             //tampilkan hasil pada form
             document.getElementById("pilihan").value = selectedpaket;
             document.getElementById("diskon").value = potongan;
-            document.getElementById("harga_paket").value = hargaPaket;
-            document.getElementById("total_biaya").value = total;
+            document.getElementById("hargaPaket").value = hargaPaket;
+            document.getElementById("totalBiaya").value = total;
         }
     </script>
 </head>
@@ -70,27 +70,28 @@
     //var_dump($row);
 
     ?>
-    <form action="kirimdata.php" method="PATCH">
+
+    <form action="kirimdata.php" method="POST">
         <div class="container">
             <div class="row justify-content-center">
-                <h4 class=" text-center">Silahkan Isikan Data Pemesanan Anda</h4>
+                <h4 class=" text-center">Form Pemesanan</h4>
                 <div class="col-6">
                     <div class="mb-3">
                         <label for="nama" class="form-label">Nama Pemesan</label>
-                        <input type="text" class="form-control" id="nama" placeholder="Nama Pemesan" name="namaPemesan" value="<?php echo $row['nama_pemesan']; ?>">
+                        <input type="text" class="form-control" id="namaPemesan" placeholder="Nama Pemesan" name="namaPemesan" value="<?php echo $row['nama_pemesan'] ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="nohp" class="form-label">Nomor HP</label>
-                        <input type="text" class="form-control" id="nohp" placeholder="Nomor HP" name="nomorTelp" value="<?php echo $row['no_telp']; ?>">
+                        <input type="text" class="form-control" id="nomorTelp" placeholder="Nomor HP" name="nomorTelp" value="<?php echo $row['no_telp'] ?>" required>
                     </div>
                     <label for="durasi" class="form-label">Durasi Perjalanan</label>
                     <div class="input-group mb-3">
-                        <input class="form-control" id="durasi" placeholder="0" name="durasiPelaksanaan" oninput="pilihPaket(this.form)" value="<?php echo $row['durasi']; ?>" required>
+                        <input type="text" class="form-control" id="durasi" placeholder="0" name="durasi" oninput="pilihPaket(this.form)" value="<?php echo $row['durasi'] ?>" required>
                         <span class="input-group-text" id="basic-addon2">Hari</span>
                     </div>
                     <label for="peserta" class="form-label">Jumlah Peserta</label> &nbsp;
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="peserta" name="jmlPeserta" oninput="pilihPaket(this.form)" value="<?php echo $row['jlh_peserta']; ?>" required>
+                        <input type="text" class="form-control" id="peserta" name="peserta" oninput="pilihPaket(this.form)" value="<?php echo $row['jlh_peserta'] ?>" required>
                         <span class="input-group-text" id="basic-addon2">Orang</span>
                     </div>
 
@@ -111,34 +112,26 @@
                     <br><br>
                     <label for="peserta" class="form-label">Diskon</label> &nbsp;
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="diskon" placeholder="0" name="diskon" disabled>
+                        <input type="text" class="form-control" id="diskon" placeholder="0" name="diskon" readonly>
                         <span class="input-group-text" id="basic-addon2">%</span>
                     </div>
                     <label for="peserta" class="form-label">Harga Paket</label><br>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Rp</span>
-                        <input type="text" class="form-control" name="hargaPaket" id="harga_paket" disabled>
+                        <input type="text" class="form-control" name="hargaPaket" id="hargaPaket" readonly>
                         <span class="input-group-text">.00</span>
                     </div>
                     <label for="peserta" class="form-label">Jumlah Tagihan</label><br>
                     <div class="input-group mb-3">
                         <span class="input-group-text">Rp</span>
-                        <input type="text" class="form-control" name="paketTagihan" id="total_biaya" disabled>
+                        <input type="text" class="form-control" name="totalBiaya" id="totalBiaya" readonly>
                         <span class="input-group-text">.00</span>
                     </div>
-                    <button type="submit" class="btn btn-success" name="edit">EDIT</button>
-                    <a href="ListPemesanan.php"><button type="button" class="btn btn-danger">Batal</button></a>
+                    <button type="submit" class="btn btn-success" name="simpan">Simpan</button>
+                    <a href="ListPemesanan.php" type="button" class="btn btn-danger">Batal</a>
                 </div>
             </div>
         </div>
-    </form>
-
-    <br>
-    <div class="container bg-dark">
-        <br>
-        <p class="text-light text-center">Pelatihan Junior Web Developer <br> Jayapura, September 2024</p>
-        <br>
-    </div>
 </body>
 
 </html>
